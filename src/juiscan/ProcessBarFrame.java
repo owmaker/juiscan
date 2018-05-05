@@ -22,7 +22,7 @@ public class ProcessBarFrame extends JFrame {
 	public ProcessBarFrame() {
 		setType(Type.UTILITY);
 		setResizable(false);
-		//setUndecorated(true);
+		setUndecorated(true);
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		
 		int height = 150;
