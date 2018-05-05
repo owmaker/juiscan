@@ -1,2 +1,2 @@
 # juiscan
-Silent scan utility for Windows.
+Java uninquiring scan utility for Windows.
