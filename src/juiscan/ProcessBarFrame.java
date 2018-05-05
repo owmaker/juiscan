@@ -11,8 +11,11 @@ import javax.swing.JProgressBar;
 import javax.swing.SpringLayout;
 import javax.swing.border.EmptyBorder;
 
+/**
+ * @author Vorontsov D.S.
+ */
 public class ProcessBarFrame extends JFrame {
-
+	
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	
