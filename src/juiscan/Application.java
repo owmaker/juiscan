@@ -48,6 +48,7 @@ public class Application {
 					pbf.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
+					//Common.showErrorMessageDialog(e);
 				}
 			}
 		});
