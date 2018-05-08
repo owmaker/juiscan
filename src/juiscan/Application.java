@@ -13,7 +13,7 @@ import juiscan.gui.shells.main.ProcessBarFrame;
  * @author Vorontsov D.S.
  */
 public class Application {
-
+	
 	public static final String app_name = "JUISCAN";
 	public static final String app_description = "JUISCAN - Java uninquiring scan utility for Windows";
 	public static final String app_version = "0.1";
@@ -21,7 +21,7 @@ public class Application {
 	public static final String app_development_dates = "2018";
 	public static final String app_mail_hyperlink = "38765232+owmaker@users.noreply.github.com";
 	public static final String[] app_autors = {"Vorontsov D.S."};
-
+	
 	private static String CD;
 	private static String TmpDir;
 	
