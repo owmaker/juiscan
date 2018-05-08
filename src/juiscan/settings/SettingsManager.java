@@ -29,7 +29,7 @@ public class SettingsManager {
 	
 	public static enum ST_TYPE{BOOLEAN, STRING, INTEGER, FLOAT, BOOLEANARRAY, STRINGARRAY, INTEGERARRAY, FLOATARRAY, INTEGERARRAYOFARRAYS};
 	
-	public static enum SETTINGS_GROUPE{LANG, COMMON};
+	public static enum SETTINGS_GROUPE{LANG, COMMON, SCAN};
 	
 	private Settings settings;
 	
@@ -38,6 +38,7 @@ public class SettingsManager {
 
 	private Class<?> ApplicationClass;
 	private Class<?> I18nClass;
+	private Class<?> ScanningManagerClass;
 	
 	public SettingsManager(){
 		
@@ -45,7 +46,7 @@ public class SettingsManager {
 			fileFullName = Application.getTemporaryDirectory() + fileName;
 			
 			try {
-				I18nClass = 						Class.forName("altir.i18n.I18n");
+				I18nClass = 						Class.forName("juiscan.i18n.I18n");
 			} catch (ClassNotFoundException e) {
 				e.printStackTrace();
 				Common.showErrorMessageDialog(e);
@@ -67,6 +68,7 @@ public class SettingsManager {
 	public void initMainSettings(){
 		try {
 			ApplicationClass = 					Class.forName("juiscan.Application");
+			ScanningManagerClass = 				Class.forName("juiscan.ScanningManager");
 			
 		} catch (ClassNotFoundException e1) {
 			e1.printStackTrace();
@@ -74,8 +76,9 @@ public class SettingsManager {
 		}
 		
 		//settings.put(SETTINGS_GROUPE.COMMON, initCommonSettings());
-
-		applyMainSettings();
+		settings.put(SETTINGS_GROUPE.SCAN, initScanSettings());
+		//applyMainSettings();
+		applyScanningSettings();
 	}
 	
 	private ArrayList<HashMap<String, String>> initLangSettings(){
@@ -191,6 +194,67 @@ public class SettingsManager {
 		group.trimToSize();
 		return group;
 	}*/
+	
+	private ArrayList<HashMap<String, String>> initScanSettings(){
+		
+		String section = SETTINGS_GROUPE.SCAN.name();
+		ArrayList<HashMap<String, String>> group = new ArrayList<HashMap<String,String>>();
+		
+		//-----------------------------------------
+		String[] names = new String[]{
+				"RESULT_PATH",
+				"FILE_FORMAT",
+				"DPI",
+				"GRAYSCALE"
+		};
+		String[] titles = new String[]{
+				I18n.getString("RESULT_PATH_title"),
+				I18n.getString("FILE_FORMAT_title"),
+				I18n.getString("DPI_title"),
+				I18n.getString("GRAYSCALE_title")
+		};
+		String[] descriptions = new String[]{
+				"",
+				"",
+				"",
+				""
+		};
+		String[] types = new String[]{
+				ST_TYPE.STRING.name(),
+				ST_TYPE.STRING.name(),
+				ST_TYPE.INTEGER.name(),
+				ST_TYPE.BOOLEAN.name()
+		};
+		String[] classNames = new String[]{
+				ScanningManagerClass.getCanonicalName(),
+				ScanningManagerClass.getCanonicalName(),
+				ScanningManagerClass.getCanonicalName(),
+				ScanningManagerClass.getCanonicalName()
+		};
+		//-----------------------------------------
+		for(int i = 0 ; i < names.length ; i++){
+			try {
+				String option = names[i];
+				group.add(i, new HashMap<String, String>());
+				group.get(i).put("name", option);
+				group.get(i).put("title", titles[i]);
+				group.get(i).put("description", descriptions[i]);
+				group.get(i).put("type", types[i]);
+				group.get(i).put("className", classNames[i]);
+				group.get(i).put("defaultVal", getCanonicalValue(getFieldValue(Class.forName(classNames[i]), option, null)));
+				if(iniFile.containsKey(section)){
+					if(iniFile.get(section).containsKey(option))
+						group.get(i).put("currentVal",iniFile.get(section, option));
+				}
+			} catch (ClassNotFoundException e) {
+				e.printStackTrace();
+				Common.showErrorMessageDialog(e);
+			}
+		}
+		//-----------------------------------------
+		group.trimToSize();
+		return group;
+	}
 
 	//-----------------------------------------------------------------------------------------------
 	//-----------------------------------------------------------------------------------------------
@@ -201,6 +265,10 @@ public class SettingsManager {
 	
 	private void applyMainSettings(){
 		applySettings(SETTINGS_GROUPE.COMMON);
+	}
+
+	private void applyScanningSettings(){
+		applySettings(SETTINGS_GROUPE.SCAN);
 	}
 	
 	private void applySettings(SETTINGS_GROUPE section){

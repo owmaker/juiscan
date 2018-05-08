@@ -37,7 +37,7 @@ public class I18n {
 			default:	locale = Locale.getDefault();
 						break;
 		}
-		labels = ResourceBundle.getBundle("altir.resources.lang.lang", locale);
+		labels = ResourceBundle.getBundle("juiscan.resources.lang.lang", locale);
 	}
 
 	public static String getString(String label){
