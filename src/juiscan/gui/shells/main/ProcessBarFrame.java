@@ -1,4 +1,4 @@
-package juiscan;
+package juiscan.gui.shells.main;
 
 import java.awt.Dimension;
 import java.awt.Toolkit;

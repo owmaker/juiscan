@@ -6,8 +6,10 @@ import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.util.regex.Matcher;
 
+import juiscan.gui.shells.main.ProcessBarFrame;
+
 /**
- * JUISCAN - Java uninquiring scan utility for Windows.
+ * JUISCAN - ѕриложение дл€ быстрого сканировани€ под Windows.
  * @author Vorontsov D.S.
  */
 public class Application {
@@ -18,7 +20,6 @@ public class Application {
 	public static final String app_build_timestamp = "2018.05.05";
 	public static final String app_development_dates = "2018";
 	public static final String app_mail_hyperlink = "38765232+owmaker@users.noreply.github.com";
-	public static final String app_development_company = "";
 	public static final String[] app_autors = {"Vorontsov D.S."};
 
 	private static String CD;
@@ -35,10 +36,10 @@ public class Application {
 			TmpDir = TmpDir.replaceAll("[/\\\\]+", Matcher.quoteReplacement(File.separator));
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
-			//Common.showErrorMessageDialog(e);
+			Common.showErrorMessageDialog(e);
 		} catch (UnsupportedEncodingException e) {
 			e.printStackTrace();
-			//Common.showErrorMessageDialog(e);
+			Common.showErrorMessageDialog(e);
 		}
 		
 		EventQueue.invokeLater(new Runnable() {
@@ -48,11 +49,21 @@ public class Application {
 					pbf.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
-					//Common.showErrorMessageDialog(e);
+					Common.showErrorMessageDialog(e);
 				}
 			}
 		});
 		
 	}
+
+	//---------------------------------------
+	public static String getCurrentDirectory(){
+		return CD;
+	}
+	
+	public static String getTemporaryDirectory(){
+		return TmpDir;
+	}
+	//---------------------------------------
 
 }
