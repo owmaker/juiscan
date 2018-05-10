@@ -34,6 +34,8 @@ public class Application {
 	private static String TmpDir;
 	private static int mode = 0;				//0 - run main window, 1 - run scanning bar
 
+	private static MainWindow mainWindow;
+	private static ProcessBarFrame scanWindow;
 	private static SettingsManager settingsManager;
 	
 	public static void main(String[] args) {
@@ -65,12 +67,12 @@ public class Application {
 				try {
 					UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
 					if(mode == 0) {
-						MainWindow mw = new MainWindow();
-						mw.setVisible(true);
+						MainWindow mainWindow = new MainWindow();
+						mainWindow.setVisible(true);
 					}
 					else if(mode == 1) {
-						ProcessBarFrame pbf = new ProcessBarFrame();
-						pbf.setVisible(true);
+						ProcessBarFrame scanWindow = new ProcessBarFrame();
+						scanWindow.setVisible(true);
 					}
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -96,5 +98,20 @@ public class Application {
 		return TmpDir;
 	}
 	//---------------------------------------
-
+	public static MainWindow getMainWindow(){
+		return mainWindow;
+	}
+	public static ProcessBarFrame getScanWindow(){
+		return scanWindow;
+	}
+	//---------------------------------------
+	public static SettingsManager getSettingsManager(){
+		return settingsManager;
+	}
+	
+	public static String getSettingsFileFullName(){
+		if(settingsManager != null) return settingsManager.getSettingsFileFullName();
+		else return "";
+	}
+	//---------------------------------------
 }

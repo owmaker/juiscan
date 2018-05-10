@@ -3,13 +3,15 @@ package juiscan.gui.shells.main;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
 import javax.swing.JTable;
 import javax.swing.SpringLayout;
 import javax.swing.border.EmptyBorder;
-import javax.swing.table.TableColumn;
 
+import juiscan.Application;
 import juiscan.i18n.I18n;
+import juiscan.settings.Settings;
 
 public class MainWindow extends JFrame {
 	
@@ -17,11 +19,16 @@ public class MainWindow extends JFrame {
 	private JPanel contentPane;
 	private JTable settingsTable;
 	private JButton saveButton;
+
+	private Settings settings;
 	
 	public MainWindow() {
+
+		settings = Application.getSettingsManager().getAllSettings();
+		
 		setTitle(I18n.getString("application_name"));
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 450, 300);
+		setBounds(100, 100, 600, 300);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -47,20 +54,20 @@ public class MainWindow extends JFrame {
 		sl_settingsPanel.putConstraint(SpringLayout.EAST, saveButton, -5, SpringLayout.EAST, settingsPanel);
 		settingsPanel.add(saveButton);
 		
-		SettingsTableDataModel stdm = new SettingsTableDataModel();
+		SettingsTableDataModel stdm = new SettingsTableDataModel(settings);
 		settingsTable = new JTable(stdm);
-		sl_settingsPanel.putConstraint(SpringLayout.NORTH, settingsTable, 0, SpringLayout.NORTH, settingsPanel);
-		sl_settingsPanel.putConstraint(SpringLayout.WEST, settingsTable, 0, SpringLayout.WEST, settingsPanel);
-		sl_settingsPanel.putConstraint(SpringLayout.SOUTH, settingsTable, -5, SpringLayout.NORTH, saveButton);
-		sl_settingsPanel.putConstraint(SpringLayout.EAST, settingsTable, 0, SpringLayout.EAST, settingsPanel);
-		settingsPanel.add(settingsTable);
+		settingsTable.getColumnModel().getColumn(0).setMinWidth(150);
+		settingsTable.getColumnModel().getColumn(1).setMinWidth(100);
+		settingsTable.getColumnModel().getColumn(2).setMinWidth(50);
+		settingsTable.getColumnModel().getColumn(3).setMinWidth(50);
+		settingsTable.getColumnModel().getColumn(4).setMinWidth(100);
 		
-		TableColumn col1 = new TableColumn(0, 50, null, null);
-		settingsTable.addColumn(col1);
-		TableColumn col2 = new TableColumn(0, 50, null, null);
-		settingsTable.addColumn(col2);
-		TableColumn col3 = new TableColumn(0, 50, null, null);
-		settingsTable.addColumn(col3);
+		JScrollPane scrollPane = new JScrollPane(settingsTable);
+		sl_settingsPanel.putConstraint(SpringLayout.NORTH, scrollPane, 0, SpringLayout.NORTH, settingsPanel);
+		sl_settingsPanel.putConstraint(SpringLayout.WEST, scrollPane, 0, SpringLayout.WEST, settingsPanel);
+		sl_settingsPanel.putConstraint(SpringLayout.SOUTH, scrollPane, -5, SpringLayout.NORTH, saveButton);
+		sl_settingsPanel.putConstraint(SpringLayout.EAST, scrollPane, 0, SpringLayout.EAST, settingsPanel);
+		settingsPanel.add(scrollPane);
 		
 		
 		

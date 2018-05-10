@@ -7,6 +7,7 @@ import java.lang.reflect.Field;
 import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 
 import javax.swing.JOptionPane;
@@ -215,9 +216,9 @@ public class SettingsManager {
 		};
 		String[] descriptions = new String[]{
 				"",
-				"",
-				"",
-				""
+				"jpeg, png",
+				"100, 200, 300, 600",
+				"true, false"
 		};
 		String[] types = new String[]{
 				ST_TYPE.STRING.name(),
@@ -291,6 +292,65 @@ public class SettingsManager {
 	
 	//-----------------------------------------------------------------------------------------------
 	//-----------------------------------------------------------------------------------------------
+	
+	public String getSettingsFileFullName(){
+		return fileFullName;
+	}
+	
+	public Settings getAllSettings(){
+		return (Settings) settings.clone();
+	}
+	
+	public void setSettings(Settings newSettings){
+		if(settings != null){
+			settings.clear();
+			settings.putAll((Settings) newSettings.clone());
+			
+			applyMainSettings();
+			applyLangSettings();
+			
+			updateIni();
+			writeSettingsToFile();
+		}
+	}
+	
+	private void updateIni(){
+		
+		iniFile = new Ini();
+		
+		ArrayList<SETTINGS_GROUPE> sections = new ArrayList<SETTINGS_GROUPE>();
+		sections.addAll(settings.keySet());
+		sections.trimToSize();
+		Collections.sort(sections);
+		
+		for(SETTINGS_GROUPE section : sections){
+
+			if(settings.get(section) != null){
+					
+				for(HashMap<String, String> optionObj : settings.get(section)){
+					String option = optionObj.get("name");
+					if (optionObj.containsKey("currentVal")){
+						iniFile.put(section.name(), option, optionObj.get("currentVal"));
+					}
+				}
+			}
+		}
+	}
+	
+	private void writeSettingsToFile(){
+
+		File f = new File(fileFullName);
+		boolean canUse = checkFile(f);
+		
+		try {
+			if(canUse) {
+				iniFile.store(f);
+			}
+		} catch (IOException e1) {
+			e1.printStackTrace();
+			Common.showErrorMessageDialog(e1);
+		}
+	}
 	
 	private void readSettingsFromFile(){
 
@@ -391,7 +451,7 @@ public class SettingsManager {
 	 * @param value - значение поля
 	 * @param valueType - тип поля
 	 */
-	@SuppressWarnings({ "rawtypes"})
+	@SuppressWarnings({"rawtypes"})
 	private static void setFieldValue(Class classObj, String fieldName, Object classInstanceObj, String value, String valueType){
 		
 		Field f = null;
