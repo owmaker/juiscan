@@ -9,6 +9,9 @@ import juiscan.i18n.I18n;
 import juiscan.settings.Settings;
 import juiscan.settings.SettingsManager.SETTINGS_GROUPE;
 
+/**
+ * @author Vorontsov D.S.
+ */
 public class SettingsTableDataModel implements TableModel {
 	
 	private Settings settings;
@@ -49,8 +52,7 @@ public class SettingsTableDataModel implements TableModel {
 	
 	@Override
 	public void addTableModelListener(TableModelListener l) {
-		// TODO Auto-generated method stub
-
+		// TODO addTableModelListener
 	}
 
 	@Override
@@ -122,14 +124,16 @@ public class SettingsTableDataModel implements TableModel {
 	
 	@Override
 	public void removeTableModelListener(TableModelListener l) {
-		// TODO Auto-generated method stub
-
+		// TODO removeTableModelListener
 	}
 	
 	@Override
 	public void setValueAt(Object aValue, int rowIndex, int columnIndex) {
-		// TODO Auto-generated method stub
-
+		
+		HashMap<String, String> option = rowToOption.get(Integer.valueOf(rowIndex));
+		if(columnIndex==4) {
+			option.put("currentVal", (String) aValue);
+		}
 	}
 	
 }

@@ -35,7 +35,6 @@ public class SettingsManager {
 	private Settings settings;
 	
 	private Ini iniFile;
-	
 
 	private Class<?> ApplicationClass;
 	private Class<?> I18nClass;
@@ -69,7 +68,7 @@ public class SettingsManager {
 	public void initMainSettings(){
 		try {
 			ApplicationClass = 					Class.forName("juiscan.Application");
-			ScanningManagerClass = 				Class.forName("juiscan.ScanningManager");
+			ScanningManagerClass = 				Class.forName("juiscan.scanning.ScanningManager");
 			
 		} catch (ClassNotFoundException e1) {
 			e1.printStackTrace();
@@ -78,7 +77,7 @@ public class SettingsManager {
 		
 		//settings.put(SETTINGS_GROUPE.COMMON, initCommonSettings());
 		settings.put(SETTINGS_GROUPE.SCAN, initScanSettings());
-		//applyMainSettings();
+		//applyCommonSettings();
 		applyScanningSettings();
 	}
 	
@@ -217,7 +216,7 @@ public class SettingsManager {
 		String[] descriptions = new String[]{
 				"",
 				"jpeg, png",
-				"100, 200, 300, 600",
+				"150, 300, 600",
 				"true, false"
 		};
 		String[] types = new String[]{
@@ -264,7 +263,7 @@ public class SettingsManager {
 		applySettings(SETTINGS_GROUPE.LANG);
 	}
 	
-	private void applyMainSettings(){
+	private void applyCommonSettings(){
 		applySettings(SETTINGS_GROUPE.COMMON);
 	}
 
@@ -306,7 +305,7 @@ public class SettingsManager {
 			settings.clear();
 			settings.putAll((Settings) newSettings.clone());
 			
-			applyMainSettings();
+			//applyMainSettings();
 			applyLangSettings();
 			
 			updateIni();

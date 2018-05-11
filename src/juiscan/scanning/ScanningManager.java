@@ -1,5 +1,8 @@
-package juiscan;
+package juiscan.scanning;
 
+/**
+ * @author Vorontsov D.S.
+ */
 public class ScanningManager {
 	
 	private static String RESULT_PATH = "";
