@@ -36,7 +36,7 @@ public class SettingsManager {
 	
 	private Ini iniFile;
 
-	private Class<?> ApplicationClass;
+	//private Class<?> ApplicationClass;
 	private Class<?> I18nClass;
 	private Class<?> ScanningManagerClass;
 	
@@ -67,7 +67,7 @@ public class SettingsManager {
 	
 	public void initMainSettings(){
 		try {
-			ApplicationClass = 					Class.forName("juiscan.Application");
+			//ApplicationClass = 					Class.forName("juiscan.Application");
 			ScanningManagerClass = 				Class.forName("juiscan.scanning.ScanningManager");
 			
 		} catch (ClassNotFoundException e1) {
@@ -263,9 +263,9 @@ public class SettingsManager {
 		applySettings(SETTINGS_GROUPE.LANG);
 	}
 	
-	private void applyCommonSettings(){
+	/*private void applyCommonSettings(){
 		applySettings(SETTINGS_GROUPE.COMMON);
-	}
+	}*/
 
 	private void applyScanningSettings(){
 		applySettings(SETTINGS_GROUPE.SCAN);
