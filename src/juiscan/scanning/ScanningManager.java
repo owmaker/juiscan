@@ -53,8 +53,11 @@ public class ScanningManager {
 					
 					SynchronousHelper.getDeclaredMethod("scanImage", new Class[] {Device}).invoke(SynchronousHelper, new Object[] {device});
 					
+					
 				}
 			}
+			
+			Manager.getDeclaredMethod("close", null).invoke(managerInstance, null);
 			
 			
 			//System.out.println(devices.size());
