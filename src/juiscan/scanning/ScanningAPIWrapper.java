@@ -1,11 +1,13 @@
 package juiscan.scanning;
 
+import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLClassLoader;
 import java.util.Enumeration;
 import java.util.HashMap;
+import java.util.List;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
 
@@ -15,7 +17,7 @@ import juiscan.Common;
 /**
  * @author Vorontsov D.S.
  */
-public class MorenaWrapper {
+public class ScanningAPIWrapper {
 	
 	private final String libFileName = "morena7.jar";
 	private final String nativeLibFileName = "morena7_win.jar";
@@ -27,7 +29,7 @@ public class MorenaWrapper {
 	private boolean loaded = false;
 	
 	
-	public MorenaWrapper() {
+	public ScanningAPIWrapper() {
 
 		classes = new HashMap<>();
 		
@@ -117,4 +119,31 @@ public class MorenaWrapper {
 		return classes.get(name);
 	}
 
+	/*private class Manager{
+		
+		public List<Device> listDevices() {
+			return null;
+		}
+	}
+	
+	private class Device extends Object{
+		
+	}
+	
+	private class Scaner extends Device{
+		
+	}
+	
+	private class Camera extends Device{
+		
+	}
+	
+	private class SynchronousHelper{
+		
+		public BufferedImage scanImage(Device device) {
+			return null;
+		}
+	}*/
+	
+	
 }

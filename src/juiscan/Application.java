@@ -13,7 +13,7 @@ import javax.swing.UIManager;
 import juiscan.gui.shells.main.MainWindow;
 import juiscan.gui.shells.main.ProcessBarFrame;
 import juiscan.i18n.I18n;
-import juiscan.scanning.MorenaWrapper;
+import juiscan.scanning.ScanningAPIWrapper;
 import juiscan.scanning.ScanningManager;
 import juiscan.settings.SettingsManager;
 
@@ -65,7 +65,7 @@ public class Application {
 		I18n.initialize();
 		settingsManager.initMainSettings();
 		
-		MorenaWrapper mw = new MorenaWrapper();
+		ScanningAPIWrapper mw = new ScanningAPIWrapper();
 		if(mw.isLoaded()) {
 			new ScanningManager(mw);
 		}
